@@ -1,0 +1,94 @@
+import React, { useState, useCallback } from 'react'
+import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
+import { BrowserRouter, Router, Route, Switch, Redirect } from "react-router-dom";
+import { Auth } from "./components/Auth"
+
+
+import CreateUser from "./components/CreateUser";
+import UserList from "./components/UserList";
+import UpdateUser from "./components/UpdateUser";
+import ViewUser from "./components/ViewUser";
+import CreateAsset from "./components/CreateAsset";
+import AssetList from "./components/AssetList";
+import Dashboard from './components/Dashboard';
+import { history } from '../src/history'
+import UpdateAsset from "./components/UpdateAsset";
+import ViewAsset from "./components/ViewAsset";
+import Topbar from "./components/topbar/Topbar";
+import UsersList from "./components/UsersList"
+import AssetsLIst from "./components/AssetsList";
+import BarChart from './components/barChart/BarChart'
+import ULogin from "./components/ULogin"
+
+
+function App() {
+  const [user, setUser] = useState()
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  let route;
+  if (isLoggedIn) {
+    route = (
+      <Switch>
+        <Route exact path="/" component={() => (<ULogin user={user} updateUser={updateUser} />)}></Route>
+        <Route path="/all-users" component={UsersList}></Route>
+        <Route path="/all-assets" component={AssetsLIst}></Route>
+        <Route path="/dashboard" component={Dashboard}></Route>
+        <Route path="/users" component={UserList}></Route>
+        <Route path="/create-user" component={CreateUser}></Route>
+        <Route path="/update-user/:id" component={UpdateUser}></Route>
+        <Route path='/view-user/:id' component={ViewUser}></Route>
+        <Route path="/assets" component={AssetList}></Route>
+        <Route path="/create-asset" component={CreateAsset}></Route>
+        <Route path="/update-asset/:id" component={UpdateAsset}></Route>
+        <Route path='/view-asset/:id' component={ViewAsset}></Route>
+        {/* <Route path='/userLogin' component={Login}></Route> */}
+        <Route path='/chart' component={BarChart}></Route>
+
+        <Redirect to="/"/>
+      </Switch>
+    )
+  } else {
+    route = (
+      <Switch>
+        <Route exact path="/" component={()=>(<ULogin user={user} updateUser={updateUser} />)}></Route>
+        <Redirect to="/"/>
+      </Switch>
+    )
+  }
+
+  const updateUser = useCallback((newUser) => {
+    setUser(newUser);
+    if (newUser) {
+      setIsLoggedIn(true)
+    } else {
+      setIsLoggedIn(false)
+    }
+  }, [])
+
+
+  const logout = useCallback(
+    () => {
+      localStorage.removeItem("user")
+      setIsLoggedIn(false)
+    }, [])
+
+
+
+  return (
+
+    <Auth.Provider value={{ isLoggedIn: isLoggedIn, logout: logout, updateUser: updateUser }}>
+
+      <div>
+        <Topbar />
+        <BrowserRouter history={history}>
+          {/* <Route exact path="/" component={<ULogin user={user} updateUser={updateUser}/>}></Route> */}
+          <div style={{ marginLeft: "12px" }}>
+            {route}
+          </div>
+        </BrowserRouter>
+      </div>
+    </Auth.Provider>
+  );
+}
+
+export default App;

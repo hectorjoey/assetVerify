@@ -1,0 +1,14 @@
+.container1{
+  display: flex;
+  margin-top: 10px;
+}
+
+.list{
+  margin-left: 25px;
+  margin-right: 25px;
+}
+
+.asset-list{
+  margin-left: 25px;
+  margin-right: 25px;  
+}

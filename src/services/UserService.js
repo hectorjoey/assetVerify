@@ -1,10 +1,10 @@
 import axios from "axios";
 
-const BASE_URL = "https://asset-verify.herokuapp.com/api/v1/user";
+const BASE_URL = "http://localhost:8080/api/v1/user";
 
 class UserService {
   getUsers() {
-    return axios.get("https://asset-verify.herokuapp.com/api/v1/users");
+    return axios.get("http://localhost:8080/api/v1/users");
   }
 
   createUser(user) {

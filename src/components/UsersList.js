@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Add } from "@material-ui/icons"
 import { Link, } from 'react-router-dom';
-import '../App.css'
+import '../app.css'
 import MaterialTable from 'material-table'
 import UserService from '../services/UserService'
 
@@ -10,7 +10,8 @@ const columns = [
     { title: "First Name", field: "firstname" },
     { title: "Last Name", field: "lastname" },
     { title: "Email", field: 'email' },
-    { title: "Role", field: 'userType' }
+    { title: "Role", field: 'userType' },
+    { title: "Location", field: 'state' }
 ]
 
 class UsersLIst extends Component {

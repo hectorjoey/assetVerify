@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import AssetService from "../services/AssetService";
 import { Link } from 'react-router-dom';
 import { Visibility, Delete, Edit, Add } from '@material-ui/icons'
-import '../App.css'
+import '../app.css'
 
 class AssetList extends Component {
   constructor(props) {

@@ -1,6 +1,6 @@
 import React from 'react'
 import Sidebar from './sidebar/Sidebar';
-import '../App.css'
+import '../app.css'
 import Home from '../pages/home/Home'
 
 const Dashboard = (props) => {

@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 // import { DataGrid } from '@material-ui/data-grid';
 import { Add } from "@material-ui/icons"
 import { Link, } from 'react-router-dom';
-import '../App.css'
+import '../app.css'
 import MaterialTable from 'material-table'
 import AssetService from '../services/AssetService'
 

@@ -5,15 +5,16 @@ import { useHistory } from 'react-router-dom';
 
 
 const App = (props) => {
+    const [isloading, setIsLoading] = useState(false)
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [user, setUser] = useState();
+
 
     const history = useHistory();
 
     const handleSubmit = async e => {
         e.preventDefault();
-
+        setIsLoading(true)
         const user = { email, password };
 
         try {
@@ -23,6 +24,7 @@ const App = (props) => {
             if (data.status === 200) {
                 props.updateUser(data)
                 localStorage.setItem('user', JSON.stringify(data))
+                setIsLoading(false)
                 history.push({
                     pathname:"/dashboard", 
                     state:{
@@ -33,19 +35,13 @@ const App = (props) => {
             }
         } catch (Error) {
             console.log(Error.message);
+            setIsLoading(false)
         }
         // send the username and password to the server
         // const response = await axios.post(
         //     "http://localhost:8080/api/v1/login",
         //     user
         // );
-        // set the state of the user
-        // setUser(response.data)
-        // // store the user in localStorage
-        // localStorage.setItem('user', response.data)
-        // console.log("Response :::" + response)
-        // console.log("Response :::" + JSON.stringify(response.data))
-
     };
 
     // if there's a user show the message below
@@ -78,7 +74,10 @@ const App = (props) => {
                             </div>
                             <div className="form-row text-center" style={{ marginTop: "12px", }}>
                                 <div className="col-sm-12">
-                                    <button className="btn btn-success" type="submit">Login</button>
+                                    <button className="btn btn-success" type="submit" disabled={isloading}>
+                                        {isloading && <div class="spinner-border text-light" role="status"></div>}
+                                        Login
+                                    </button>
                                 </div>
                             </div>
                         </form>

@@ -1,3 +1,4 @@
+import { SignalCellularNullOutlined } from "@material-ui/icons";
 import React, { Component } from "react";
 import UserService from "../services/UserService";
 
@@ -12,6 +13,7 @@ class CreateUser extends Component {
       password: "",
       userType: "",
       states: "",
+      loading: false,
     };
 
     this.changeFirstnameHandler = this.changeFirstnameHandler.bind(this);
@@ -25,6 +27,8 @@ class CreateUser extends Component {
   }
   addUser = (e) => {
     e.preventDefault();
+    this.setState({loading: true})
+
     let user = {
       firstname: this.state.firstname,
       lastname: this.state.lastname,
@@ -33,11 +37,42 @@ class CreateUser extends Component {
       userType: this.state.userType,
       states: this.state.states,
     };
-    console.log("user => " + JSON.stringify(user));
+    // console.log("user => " + JSON.stringify(user));
+    if(this.state.firstname) {
+      if(this.state.lastname) {
+        if(this.state.email) {
+          if(this.state.password && this.state.password.length > 7) {
+            if(this.state.userType) {
+              if(this.state.states) {
+                UserService.createUser(user).then((res) => {
+                  this.setState({loading: false})
+                  this.props.history.push("/dashboard");
+                });
+              }else {
+                alert('Please enter select a state')
+                this.setState({loading: false})
+              }
+            } else {
+              alert('Please select a Role');
+              this.setState({loading: false})
+            }
+          } else {
+              alert('Please enter a valid password ')
+              this.setState({loading: false})
+          }
+        }else {
+          alert('Please enter email ')
+          this.setState({loading: false})
+        }
+      }else {
+        alert('Please enter lastname')
+        this.setState({loading: false})
+      }
+    }else {
+      alert('Please enter firstname')
+      this.setState({loading: false})
+    }
 
-    UserService.createUser(user).then((res) => {
-      this.props.history.push("/dashboard");
-    });
   };
 
   changeFirstnameHandler = (event) => {
@@ -57,12 +92,10 @@ class CreateUser extends Component {
 
   handleSelectUserType = (event) => {
     this.setState({ userType: event.target.value });
-    console.log("usertype");
   };
 
   handleSelectUserStates = (event) => {
     this.setState({ states: event.target.value });
-    console.log("states");
   };
   cancel() {
     this.props.history.push("/dashboard");
@@ -128,7 +161,10 @@ class CreateUser extends Component {
                     </div>
                     <div className="form-row text-center" style={{ marginTop: "12px" }}>
                       <div className="col-12">
-                        <button className="btn btn-success" onClick={this.addUser}>Create User</button>
+                        <button className="btn btn-success" onClick={this.addUser} disabled={this.state.loading}>
+                          {this.state.loading && <div class="spinner-border text-light" role="status"></div>}
+                          Create User
+                        </button>
 
                         <button className="btn btn-danger" onClick={this.cancel.bind(this)} style={{ margin: "22px" }}>Cancel</button>
                       </div>

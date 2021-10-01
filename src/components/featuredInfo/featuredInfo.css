@@ -49,3 +49,10 @@
      font-size: 15px;
      color: grey;
  }
+
+ /***************** LOADING STYLE ****************************/
+ .featuredLoading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+ }

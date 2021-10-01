@@ -3,13 +3,16 @@ import axios from "axios";
 import Dashboard from "../components/Dashboard";
 import { useHistory } from 'react-router-dom';
 
+import Loading  from "../Utils/Loading/loading"
+
 
 const App = (props) => {
     const [isloading, setIsLoading] = useState(false)
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const user = JSON.parse(localStorage.getItem('user'))?.status;
 
-
+    console.log('Userprofile ' + user)
     const history = useHistory();
 
     const handleSubmit = async e => {
@@ -20,7 +23,6 @@ const App = (props) => {
         try {
             const { data } = await axios.post("https://asset-verify.herokuapp.com/api/v1/login",
                 user)
-            console.log(data)
             if (data.status === 200) {
                 props.updateUser(data)
                 localStorage.setItem('user', JSON.stringify(data))
@@ -37,21 +39,13 @@ const App = (props) => {
             console.log(Error.message);
             setIsLoading(false)
         }
-        // send the username and password to the server
-        // const response = await axios.post(
-        //     "http://localhost:8080/api/v1/login",
-        //     user
-        // );
     };
 
-    // if there's a user show the message below
-    // if (user) {
-    //     console.log("id: " + user.id)
-    //     console.log("user Role::: " + user.userType)
-    //     return <div>
-    //         <Dashboard />
-    //     </div>
-    // }
+    //if there's a user show the message below
+    if (user) return <Dashboard />
+        
+    
+
 
     // if there's no user, show the login form
     return (

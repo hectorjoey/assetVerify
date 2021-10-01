@@ -6,10 +6,7 @@ import { Auth } from '../Auth'
 
 
 const Sidebar = ({ id }) => {
-    // cancel() {
-    //     this.props.history.push("/");
-    // }
-    // render() {
+    
     const auth = useContext(Auth);
     const history = useHistory();
 
@@ -17,7 +14,7 @@ const Sidebar = ({ id }) => {
         auth.logout()
         history.push("/")
     }
-    console.log("sideBar userId" + id)
+    
     return (
         <div className="sidebar">
             <div className="sidbarWrapper">

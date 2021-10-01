@@ -1,10 +1,10 @@
-import React, { Component } from 'react'
+import React from 'react'
 // import { DataGrid } from '@material-ui/data-grid';
 import { Add } from "@material-ui/icons"
 import { Link, } from 'react-router-dom';
 import '../App.css'
 import MaterialTable from 'material-table'
-import AssetService from '../services/AssetService'
+
 
 const columns = [
     { title: "ID", field: "id" },
@@ -24,36 +24,24 @@ const columns = [
 ]
 
 const AssetTitle = "All Assets";
-class AssetsLIst extends Component {
+const AssetsLIst = ({assets, isLoading}) => {
+    return (
+        <>
+            <div className="col-lg-12">
+                <Link to={"/create-asset"} style={{ marginBottom: "10px", marginRight:"12px"}} className="btn btn-primary float-lg-end">
+                    <Add />
+                    Create Asset
+                </Link>
+            </div>
+        <div style={{ marginTop: "30px", padding: "10px" }} className={isLoading && 'assetListLoading'}>
+            {isLoading ? (<div class="spinner-border text-primary dashboard-spinner" role="status"></div>)
+                : (
+                    <MaterialTable title={AssetTitle} data={assets} columns={columns}/>
+                )
+            }
+        </div >
+        </>
+    );
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            assets: [],
-        }
-
-    }
-    componentDidMount() {
-        console.log("properties: " + this.props);
-        AssetService.getAssets().then((res) => {
-            this.setState({ assets: res.data });
-        });
-    }
-
-    render() {
-        return (
-             <>
-                <div className="col-lg-12">
-                    <Link to={"/create-asset"} style={{ marginBottom: "10px", marginRight:"12px"}} className="btn btn-primary float-lg-end">
-                        <Add />
-                        Create Asset
-                    </Link>
-                </div>
-            <div style={{ marginTop: "30px", padding: "10px" }}>
-                <MaterialTable title={AssetTitle} data={this.state.assets} columns={columns}/>
-            </div >
-            </>
-        );
-    }
 }
 export default AssetsLIst

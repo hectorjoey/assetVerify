@@ -1,5 +1,7 @@
 .home{
     flex: 4;
+    overflow: auto;
+    padding: 5px;
 }
 
 .homeWidgets{

@@ -42,7 +42,7 @@ const App = (props) => {
     };
 
     //if there's a user show the message below
-    if (user) return <Dashboard />
+    // if (user) return <Dashboard />
         
     
 

@@ -44,8 +44,6 @@ const App = (props) => {
         console.log("user Id:: " + user.id)
         UserService.loginUser(user).then((res) => {
             this.props.history.push(`/dashboard`)
-
-
         });
 
     }

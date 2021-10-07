@@ -11,28 +11,26 @@ class CreateAsset extends Component {
       assetTag: "",
       model: "",
       location: "",
-      assignee: "",
-      assigneeEmail: "",
+      // assignee: "",
+      // assigneeEmail: "",
       serialnumber: "",
       manufacturer: "",
-      type: "",
       project: "",
       assetStatus: "",
-      checkedAsset: ""
-
+      checkedAsset: "",
+      loading: false,
     };
 
 
     this.changeDescriptionHandler = this.changeDescriptionHandler.bind(this);
     this.changeAssetTagHandler = this.changeAssetTagHandler.bind(this);
     this.changeModelHandler = this.changeModelHandler.bind(this);
-    this.changeAssigneeHandler = this.changeAssigneeHandler.bind(this);
-    this.changeAssigneeEmailHandler = this.changeAssigneeEmailHandler.bind(this);
+    // this.changeAssigneeHandler = this.changeAssigneeHandler.bind(this);
+    // this.changeAssigneeEmailHandler = this.changeAssigneeEmailHandler.bind(this);
     this.handleSelectCheckedAsset = this.handleSelectCheckedAsset.bind(this);
     this.handleSelectUserStates = this.handleSelectUserStates.bind(this);
     this.changeSerialnumberHandler = this.changeSerialnumberHandler.bind(this);
     this.changeManufacturerHandler = this.changeManufacturerHandler.bind(this);
-    this.changeTypeHandler = this.changeTypeHandler.bind(this);
     this.changeProjectHandler = this.changeProjectHandler.bind(this);
     this.changeAssetStatusHandler = this.changeAssetStatusHandler.bind(this);
 
@@ -41,29 +39,85 @@ class CreateAsset extends Component {
   }
   addAsset = (e) => {
     e.preventDefault();
+    this.setState({ loading: true })
     let asset = {
-      userId:JSON.parse(localStorage.getItem('user'))?.id,
+      userId: JSON.parse(localStorage.getItem('user'))?.id,
       description: this.state.description,
       assetTag: this.state.assetTag,
       model: this.state.model,
-      assignee: this.state.assignee,
-      assigneeEmail: this.state.assigneeEmail,
+      // assignee: this.state.assignee,
+      // assigneeEmail: this.state.assigneeEmail,
       checkedAsset: this.state.checkedAsset,
       location: this.state.location,
       serialnumber: this.state.serialnumber,
       manufacturer: this.state.manufacturer,
-      type: this.state.type,
       project: this.state.project,
       assetStatus: this.state.assetStatus,
 
     };
-
-    console.log("asset => " + JSON.stringify(asset));
-
-    AssetService.createAsset(asset).then((res) => {
-      this.props.history.push("/dashboard");
-      console.log("asser => " + JSON.stringify(asset));
-    });
+    if (this.state.description) {
+      if (this.state.assetTag) {
+        if (this.state.model) {
+          // if (this.state.assignee) {
+          //   if (this.state.assigneeEmail) {
+              if (this.state.checkedAsset) {
+                if (this.state.location) {
+                  if (this.state.serialnumber) {
+                    if (this.state.manufacturer) {
+                      // if (this.state.type) {
+                        if (this.state.project) {
+                          if (this.state.assetStatus) {
+                            console.log("asset => " + JSON.stringify(asset));
+                            AssetService.createAsset(asset).then((res) => {
+                              this.setState({ loading: false })
+                              this.props.history.push("/dashboard");
+                              console.log("asser => " + JSON.stringify(asset));
+                            });
+                          } else {
+                            alert("Please enter an Asset Status!")
+                            this.setState({ loading: false })
+                          }
+                        } else {
+                          alert("Please enter a Project!")
+                          this.setState({ loading: false })
+                        }
+                      // }
+                    } else {
+                      alert("Please enter a Manufacturer!")
+                      this.setState({ loading: false })
+                    }
+                  } else {
+                    alert("Please enter a Serial Number!")
+                    this.setState({ loading: false })
+                  }
+                } else {
+                  alert("Please enter a Location!")
+                  this.setState({ loading: false })
+                }
+              } else {
+                alert("Please enter a Checked Asset!")
+                this.setState({ loading: false })
+              }
+          //   } else {
+          //     alert("Please enter an Assignee Email!")
+          //     this.setState({ loading: false })
+          //   }
+          // } else {
+          //   alert("Please enter an Assignee")
+          //   this.setState({ loading: false })
+          // }
+        } else {
+          alert("please enter a model!")
+          this.setState({ loading: false })
+        }
+      } else {
+        alert("Please enter an Asset Tag!")
+        this.setState({ loading: false })
+      }
+    } else {
+      alert("Please enter description!")
+      this.setState({ loading: false })
+    }
   };
 
   changeDescriptionHandler = (event) => {
@@ -85,19 +139,12 @@ class CreateAsset extends Component {
     this.setState({ assigneeEmail: event.target.value });
   };
 
-
-  // changeAssigneeEmailHandler=(event) => {
-  //   this.state({assigneeEmail: event.target.value})
-  // }
-
   handleSelectCheckedAsset = (event) => {
     this.setState({ checkedAsset: event.target.value });
-    console.log("checked asset");
   };
 
   handleSelectUserStates = (event) => {
     this.setState({ location: event.target.value });
-    console.log("location");
   };
   changeSerialnumberHandler = (event) => {
     this.setState({ serialnumber: event.target.value });
@@ -107,9 +154,9 @@ class CreateAsset extends Component {
     this.setState({ manufacturer: event.target.value });
   };
 
-  changeTypeHandler = (event) => {
-    this.setState({ type: event.target.value });
-  };
+  // changeTypeHandler = (event) => {
+  //   this.setState({ type: event.target.value });
+  // };
 
   changeProjectHandler = (event) => {
     this.setState({ project: event.target.value });
@@ -152,7 +199,7 @@ class CreateAsset extends Component {
                         <input name="model" className="form-control" value={this.state.model} onChange={this.changeModelHandler} />
                       </div>
 
-                      <label style={{ marginTop: "10px" }}> Assignee </label>
+                      {/* <label style={{ marginTop: "10px" }}> Assignee </label>
                       <div className="col-sm-12">
                         <input name="assignee" className="form-control" value={this.state.assignee} onChange={this.changeAssigneeHandler} />
                       </div>
@@ -160,7 +207,7 @@ class CreateAsset extends Component {
                       <label style={{ marginTop: "10px" }}>Assignee Email </label>
                       <div className="col-sm-12">
                         <input type="email" name="assigneeEmail" className="form-control" value={this.state.assigneeEmail} onChange={this.changeAssigneeEmailHandler} />
-                      </div>
+                      </div> */}
 
                       <label style={{ marginTop: "10px" }}> Serial Number </label>
                       <div className="col-sm-12">
@@ -169,10 +216,6 @@ class CreateAsset extends Component {
                       <label style={{ marginTop: "10px" }}> Manufacturer </label>
                       <div className="col-sm-12">
                         <input name="manufacturer" className="form-control" value={this.state.manufacturer} onChange={this.changeManufacturerHandler} />
-                      </div>
-                      <label style={{ marginTop: "10px" }}> Type </label>
-                      <div className="col-sm-12">
-                        <input name="type" className="form-control" value={this.state.type} onChange={this.changeTypeHandler} />
                       </div>
                       <label style={{ marginTop: "10px" }}> Project </label>
                       <div className="col-sm-12">
@@ -208,10 +251,14 @@ class CreateAsset extends Component {
                         </select>
                       </div>
                     </div>
-
                     <div className="form-row text-center" style={{ marginTop: "12px" }}>
                       <div className="col-12">
-                        <button className="btn btn-success" onClick={this.addAsset}>Create Asset</button>
+                        {/* <button className="btn btn-success" onClick={this.addAsset}>
+                          <div class="spinner-border text-light" role="status"></div>
+                          Create Asset</button> */}
+                        <button className="btn btn-success" onClick={this.addAsset}>
+                          {this.state.loading && <div class="spinner-border text-light" role="status"></div>}
+                          Add Asset</button>
 
                         <button className="btn btn-danger" onClick={this.cancel.bind(this)} style={{ margin: "22px" }}>Cancel</button>
                       </div>

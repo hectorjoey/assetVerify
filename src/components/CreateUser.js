@@ -1,4 +1,3 @@
-import { SignalCellularNullOutlined } from "@material-ui/icons";
 import React, { Component } from "react";
 import UserService from "../services/UserService";
 
@@ -40,7 +39,7 @@ class CreateUser extends Component {
     // console.log("user => " + JSON.stringify(user));
     if(this.state.firstname) {
       if(this.state.lastname) {
-        if(this.state.email) {
+        if(this.state.email && this.state.email) {
           if(this.state.password && this.state.password.length > 7) {
             if(this.state.userType) {
               if(this.state.states) {
@@ -98,7 +97,7 @@ class CreateUser extends Component {
     this.setState({ states: event.target.value });
   };
   cancel() {
-    this.props.history.push("/dashboard");
+    this.props.history.push("/users");
   }
 
   render() {

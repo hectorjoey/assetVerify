@@ -9,6 +9,7 @@ class AssetList extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      location: JSON.parse(localStorage.getItem('user'))?.state,
       assets: [],
     };
 
@@ -20,7 +21,7 @@ class AssetList extends Component {
 
   componentDidMount() {
     console.log("properties: " + this.props);
-    AssetService.getAssets().then((res) => {
+    AssetService.getAssetByLocation(this.state.location).then((res) => {
       this.setState({ assets: res.data });
     });
 
@@ -60,7 +61,7 @@ class AssetList extends Component {
             <div className="col-lg-12">
               <Link to={"/create-asset"} style={{ marginBottom: "10px", marginTop: "22px" }} className="btn btn-primary float-lg-end">
                 <Add />
-                Create New Asset
+                Add New Asset
               </Link>
             </div>
 

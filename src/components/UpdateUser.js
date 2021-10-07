@@ -164,5 +164,4 @@ class UpdateUser extends Component {
     );
   }
 }
-
 export default UpdateUser;

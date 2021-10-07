@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from 'react'
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
-import { BrowserRouter, Router, Route, Switch, Redirect } from "react-router-dom";
+import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import { Auth } from "./components/Auth"
 
 
@@ -19,6 +19,7 @@ import UsersList from "./components/UsersList"
 import AssetsLIst from "./components/AssetsList";
 import BarChart from './components/barChart/BarChart'
 import ULogin from "./components/ULogin"
+import UserProfile from './components/userProfile/UserProfile'
 
 
 function App() {
@@ -41,10 +42,10 @@ function App() {
         <Route path="/create-asset" component={CreateAsset}></Route>
         <Route path="/update-asset/:id" component={UpdateAsset}></Route>
         <Route path='/view-asset/:id' component={ViewAsset}></Route>
-        {/* <Route path='/userLogin' component={Login}></Route> */}
+        <Route path='/my-profile/:id' component={UserProfile}></Route>
         <Route path='/chart' component={BarChart}></Route>
 
-        <Redirect to="/"/>
+        {/* <Redirect to="/"/> */}
       </Switch>
     )
   } else {

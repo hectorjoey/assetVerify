@@ -3,7 +3,7 @@ import axios from "axios";
 const BASE_URL = "https://asset-verify.herokuapp.com/api/v1/assets";
 
 
-export const GetAssets = async() => {
+export const GetAssets = async () => {
   try {
     const { data } = await axios.get(BASE_URL)
     return data
@@ -24,6 +24,11 @@ class AssetService {
 
   getAssetById(assetId) {
     return axios.get(BASE_URL + "/" + assetId);
+  }
+
+  getAssetByLocation(location) {
+    return axios.get(BASE_URL + "/" + location);
+
   }
   updateAsset(asset, assetId) {
     return axios.put(BASE_URL + "/" + assetId, asset);

@@ -1,18 +1,17 @@
 import React, { Component } from "react";
 import UserService from "../services/UserService";
+
+
 class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
       email: '',
       password: '',
-     
 
     }
     this.handleChange = this.handleChange.bind(this)
     this.loginClicked = this.loginClicked.bind(this)
-  
-  
   }
 
   handleChange(event) {
@@ -33,25 +32,27 @@ class Login extends Component {
 
     };
     console.log("User login details => " + JSON.stringify(user));
-
+    this.setState({ loading: false })
     UserService.loginUser(user).then((res) => {
+
       this.props.history.push(`/dashboard`)
-      console.log("Id:: "+ this.props.loading)
+
+      console.log("Id:: " + this.props.loading)
     });
     // console.log("Id ::" +  user.id)
 
   }
 
   render() {
-  
+
     return (
-    
+
       <div className="container" style={{ marginTop: "15px", padding: "50px" }}>
-      
+
         <div className="row">
           {/* <img className="text-center" src={Imgs} alt="logo" /> */}
           <div className="card col-md-6 offset-md-3 offset-md-3">
-           
+
             <h3 className="text-center" style={{ margin: "15px" }}> Enter Login Details </h3>
             <div className="card-body">
               <form>
@@ -59,7 +60,7 @@ class Login extends Component {
                   <div className="form-group">
                     <label style={{ marginTop: "10px" }}> Email </label>
                     <div className="col-sm-12">
-                      <input type="email" name="email" className="form-control" value={this.state.email} onChange={this.handleChange}/>
+                      <input type="email" name="email" className="form-control" value={this.state.email} onChange={this.handleChange} />
                     </div>
 
                     <label style={{ marginTop: "10px" }}> Password </label>

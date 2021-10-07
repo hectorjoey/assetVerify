@@ -4,8 +4,6 @@ import { Link } from 'react-router-dom';
 import { Visibility, Delete, Edit, Add } from '@material-ui/icons'
 import '../App.css'
 
-
-
 class UserList extends Component {
   constructor(props) {
     super(props);

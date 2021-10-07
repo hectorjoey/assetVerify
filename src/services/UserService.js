@@ -25,8 +25,10 @@ class UserService {
     return axios.delete(BASE_URL + "/" + userId);
   }
 
+  
+
   loginUser(user) {
-    return axios.post("http://localhost:8080/api/v1/login", user)
+    return axios.post("https://asset-verify.herokuapp.com/api/v1/login", user)
   }
 
   getUser(userId) {

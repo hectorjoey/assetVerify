@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import AssetService from "../services/AssetService";
+// import DatePicker from 'react-datepicker';
+// import "react-datepicker/dist/react-datepicker.css";
 
 class UpdateAsset extends Component {
     constructor(props) {
@@ -18,7 +20,8 @@ class UpdateAsset extends Component {
             project: "",
             assetStatus: "",
             checkedAsset: "",
-            date: ""
+            // returnDate: "",
+            // checkedOutDate: ""
 
         };
 

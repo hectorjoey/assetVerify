@@ -1,10 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import Dashboard from "../components/Dashboard";
 import { useHistory } from 'react-router-dom';
-
-import Loading  from "../Utils/Loading/loading"
-
 
 const App = (props) => {
     const [isloading, setIsLoading] = useState(false)

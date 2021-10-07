@@ -1,12 +1,13 @@
 import React, { useContext } from 'react'
 import './sidebar.css'
-import { LineStyle, Timeline, People, VerifiedUser, Report, ExitToApp } from '@material-ui/icons'
+import { LineStyle, Timeline, People, VerifiedUser, Report, ExitToApp, RecentActors } from '@material-ui/icons'
 import { Link, useHistory } from 'react-router-dom';
 import { Auth } from '../Auth'
 
 
 const Sidebar = ({ id }) => {
-    
+    const user = JSON.parse(localStorage.getItem('user'))?.userType;
+    // const admin = JSON.parse(localStorage.getItem('Admin'))?.userType;
     const auth = useContext(Auth);
     const history = useHistory();
 
@@ -14,7 +15,7 @@ const Sidebar = ({ id }) => {
         auth.logout()
         history.push("/")
     }
-    
+
     return (
         <div className="sidebar">
             <div className="sidbarWrapper">
@@ -25,18 +26,33 @@ const Sidebar = ({ id }) => {
                             <LineStyle className="sidebarIcon" />
                             Home
                         </Link>
-                        <li className="sidebarListItem">
-                            <Timeline className="sidebarIcon" />
-                            Analytics
-                        </li>
-                        <Link to={"/users"} className="sidebarListItem">
-                            <People />
-                            Users
-                        </Link>
+                        {
+                            user !== 'User' &&
+                            <li className="sidebarListItem">
+                                <Timeline className="sidebarIcon" />
+                                Analytics
+                            </li>
+                        }
+                        {
+                            user !== 'User' &&
+                            <Link to={"/users"} className="sidebarListItem">
+                                <People />
+                                Users
+                            </Link>
+
+                        }
                         <Link to={"/assets"} className="sidebarListItem" id={id}>
                             <VerifiedUser className="sidebarIcon" />
                             Assets
                         </Link>
+
+                        {
+                            user !== 'Admin' &&
+                            <Link to={`/my-profile/${id}`} className="sidebarListItem">
+                                <RecentActors className="sidebarIcon" />
+                                Profile
+                            </Link>
+                            }
                         <li className="sidebarListItem">
                             <Report className="sidebarIcon" />
                             Report

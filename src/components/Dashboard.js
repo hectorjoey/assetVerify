@@ -17,13 +17,11 @@ const Dashboard = (props) => {
         });
     }, [])
 
-
     return (
         <>
             <div className="container1">
                 <Sidebar id={props?.location?.state?.id} />
                 <Home isLoading={isLoading} assets={assets} />
-
             </div>
         </>
     )

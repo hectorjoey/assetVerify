@@ -4,13 +4,17 @@ import UsersLIst from '../UsersList';
 import './widgetSm.css'
 
 const WidgetSm = () => {
-
+    const user = JSON.parse(localStorage.getItem('user'))?.userType;
     return (
-        <div className="widgetSm">
-            <UsersLIst/>
-        </div>
+        <> {
+            user !== 'User' &&
+            <div className="widgetSm">
+                <UsersLIst />
+            </div>
+        }
+        </>
     );
-    
+
 }
 
 export default WidgetSm;

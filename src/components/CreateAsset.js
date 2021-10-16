@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import AssetService from "../services/AssetService"
+import {CreateAssets} from "../services/AssetService"
 // import Topbar from "../components/topbar/Topbar"
 
 class CreateAsset extends Component {
@@ -11,8 +12,8 @@ class CreateAsset extends Component {
       assetTag: "",
       model: "",
       location: "",
-      // assignee: "",
-      // assigneeEmail: "",
+      assignee: "",
+      assigneeEmail: "",
       serialnumber: "",
       manufacturer: "",
       project: "",
@@ -25,8 +26,8 @@ class CreateAsset extends Component {
     this.changeDescriptionHandler = this.changeDescriptionHandler.bind(this);
     this.changeAssetTagHandler = this.changeAssetTagHandler.bind(this);
     this.changeModelHandler = this.changeModelHandler.bind(this);
-    // this.changeAssigneeHandler = this.changeAssigneeHandler.bind(this);
-    // this.changeAssigneeEmailHandler = this.changeAssigneeEmailHandler.bind(this);
+    this.changeAssigneeHandler = this.changeAssigneeHandler.bind(this);
+    this.changeAssigneeEmailHandler = this.changeAssigneeEmailHandler.bind(this);
     this.handleSelectCheckedAsset = this.handleSelectCheckedAsset.bind(this);
     this.handleSelectUserStates = this.handleSelectUserStates.bind(this);
     this.changeSerialnumberHandler = this.changeSerialnumberHandler.bind(this);
@@ -45,8 +46,8 @@ class CreateAsset extends Component {
       description: this.state.description,
       assetTag: this.state.assetTag,
       model: this.state.model,
-      // assignee: this.state.assignee,
-      // assigneeEmail: this.state.assigneeEmail,
+      assignee: '',
+      assigneeEmail: '',
       checkedAsset: this.state.checkedAsset,
       location: this.state.location,
       serialnumber: this.state.serialnumber,
@@ -60,18 +61,22 @@ class CreateAsset extends Component {
         if (this.state.model) {
           // if (this.state.assignee) {
           //   if (this.state.assigneeEmail) {
-              if (this.state.checkedAsset) {
+              // if (this.state.checkedAsset) {
                 if (this.state.location) {
                   if (this.state.serialnumber) {
                     if (this.state.manufacturer) {
                       // if (this.state.type) {
                         if (this.state.project) {
                           if (this.state.assetStatus) {
-                            console.log("asset => " + JSON.stringify(asset));
-                            AssetService.createAsset(asset).then((res) => {
-                              this.setState({ loading: false })
-                              this.props.history.push("/dashboard");
-                              console.log("asser => " + JSON.stringify(asset));
+                              CreateAssets(asset).then((res) => {
+                              if(res === 'Request failed with status code 500') {
+                                alert('Network error')
+                                this.setState({ loading: false })
+                              }else {
+                                this.setState({ loading: false })
+                                this.props.history.push("/dashboard");
+                              }
+                              console.log({res});
                             });
                           } else {
                             alert("Please enter an Asset Status!")
@@ -94,10 +99,10 @@ class CreateAsset extends Component {
                   alert("Please enter a Location!")
                   this.setState({ loading: false })
                 }
-              } else {
-                alert("Please enter a Checked Asset!")
-                this.setState({ loading: false })
-              }
+              // } else {
+              //   alert("Please enter a Checked Asset!")
+              //   this.setState({ loading: false })
+              // }
           //   } else {
           //     alert("Please enter an Assignee Email!")
           //     this.setState({ loading: false })
@@ -172,8 +177,8 @@ class CreateAsset extends Component {
   }
 
   render() {
-    const userId = JSON.parse(localStorage.getItem('user')).id
-    console.log(userId)
+   // const userId = JSON.parse(localStorage.getItem('user')).id
+
     return (
       <React.Fragment>
         <div className="col-lg-12" style={{ marginTop: "15px", }}>

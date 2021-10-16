@@ -1,15 +1,18 @@
-import React from 'react'
 import './featuredInfo.css'
 // import { PeopleOutline } from '@material-ui/icons'
 
 export default function FeatureInfo({ isLoading, assets }) {
-    const user = JSON.parse(localStorage.getItem('user'))?.userType;
+    const user = JSON.parse(localStorage.getItem('user'));
+    const userType = user?.userType;
+    const userLocation = user?.result?.states
     const checkout = assets?.map((x) => x.checkedAsset)?.filter((x) => x === 'Checked Out')
-    
+    const userAssets = assets.map((x) => x.location).filter((x) => x === userLocation)    
+    const userCheckedOutAsset = assets.filter(x => x.location === userLocation && x.checkedAsset === 'Checked Out')
+
     return (
         <>
-            {
-                user !== 'User' &&
+            {/* {
+                userType !== 'User' && */}
                 <div className='featured'>
                     {/* <div className="featuredItem">
                         <span className="featuredTitle"><PeopleOutline /> Users</span>
@@ -25,8 +28,9 @@ export default function FeatureInfo({ isLoading, assets }) {
                                 (<>
                                     <span className="featuredTitle"> Total Assets</span>
                                     <div className="text-right" style={{ textAlign: "right", marginTop: "45px" }}>
-                                        <span className="featuredMoney">{assets?.length}</span>
+                                        <span className="featuredMoney"> {userType !== 'User' ? assets?.length : userAssets?.length}</span>
                                     </div>
+                                    {userType === 'User' && <span>In {userLocation}</span>}
                                 </>)
                         }
                     </div>
@@ -37,7 +41,8 @@ export default function FeatureInfo({ isLoading, assets }) {
                                     <>
                                         <span className="featuredTitle"> Total Checked-Out Assets</span>
                                         <div className="text-right" style={{ textAlign: "right", marginTop: "45px" }}>
-                                            <span className="featuredMoney">{checkout?.length}</span>
+                                            <span className="featuredMoney">{ userType !== 'User' ? checkout?.length : userCheckedOutAsset?.length}</span>
+                                            {userType === 'User' && <span>In {userLocation}</span>}
                                         </div>
                                     </>
                                 )
@@ -45,7 +50,7 @@ export default function FeatureInfo({ isLoading, assets }) {
 
                     </div>
                 </div>
-            }
+            {/* } */}
         </>
     )
 }

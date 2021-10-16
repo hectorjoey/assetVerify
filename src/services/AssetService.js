@@ -12,6 +12,16 @@ export const GetAssets = async () => {
   }
 }
 
+export const CreateAssets = async (asset) => {
+  console.log(asset)
+  try {
+    const data = await axios.post(BASE_URL, asset)
+    return data
+  } catch (error) {
+    return error.message
+  }
+}
+
 
 class AssetService {
   getAssets() {

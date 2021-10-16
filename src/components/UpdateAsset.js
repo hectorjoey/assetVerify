@@ -20,6 +20,7 @@ class UpdateAsset extends Component {
             project: "",
             assetStatus: "",
             checkedAsset: "",
+            checkedDate: ""
             // returnDate: "",
             // checkedOutDate: ""
 
@@ -70,15 +71,16 @@ class UpdateAsset extends Component {
             model: this.state.model,
             location: this.state.location,
             assignee: this.state.assignee,
+            assigneeEmail: this.state.assigneeEmail,
             serialnumber: this.state.serialnumber,
             manufacturer: this.state.manufacturer,
             type: this.state.type,
             project: this.state.project,
             assetStatus: this.state.assetStatus,
             checkedAsset: this.state.checkedAsset,
+            checkedDate: new Date().toLocaleString().slice(0, 10)
 
         };
-        console.log("asset => " + JSON.stringify(asset));
 
         AssetService.updateAsset(asset, this.state.id).then((res) => {
             this.props.history.push("/dashboard");
@@ -101,12 +103,10 @@ class UpdateAsset extends Component {
     };
     handleSelectCheckedAsset = (event) => {
         this.setState({ checkedAsset: event.target.value });
-        console.log("checked asset");
     };
 
     handleSelectUserStates = (event) => {
         this.setState({ location: event.target.value });
-        console.log("location");
     };
     changeSerialnumberHandler = (event) => {
         this.setState({ serialnumber: event.target.value });
@@ -128,11 +128,16 @@ class UpdateAsset extends Component {
         this.setState({ assetStatus: event.target.value });
     };
 
+    changeAssigneeEmailHandler = (event) => {
+        this.setState({assigneeEmail: event.target.value})
+    }
+
     cancel() {
         this.props.history.push("/dashboard");
     }
 
     render() {
+
         return (
             <>
                 <div className="container" style={{ marginTop: "15px", padding: "50px" }}>
@@ -162,6 +167,11 @@ class UpdateAsset extends Component {
                                             <div className="col-sm-12">
                                                 <input name="assignee" className="form-control" value={this.state.assignee} onChange={this.changeAssigneeHandler} />
                                             </div>
+                                            <label style={{ marginTop: "10px" }}> Assignee Email </label>
+                                            <div className="col-sm-12">
+                                                <input name="assignee" className="form-control" value={this.state.assigneeEmail} onChange={this.changeAssigneeEmailHandler} />
+                                            </div>
+
 
                                             <label style={{ marginTop: "10px" }}> Serial Number </label>
                                             <div className="col-sm-12">
@@ -171,10 +181,10 @@ class UpdateAsset extends Component {
                                             <div className="col-sm-12">
                                                 <input name="manufacturer" className="form-control" value={this.state.manufacturer} onChange={this.changeManufacturerHandler} />
                                             </div>
-                                            <label style={{ marginTop: "10px" }}> Type </label>
+                                            {/* <label style={{ marginTop: "10px" }}> Type </label>
                                             <div className="col-sm-12">
                                                 <input name="type" className="form-control" value={this.state.type} onChange={this.changeTypeHandler} />
-                                            </div>
+                                            </div> */}
                                             <label style={{ marginTop: "10px" }}> Project </label>
                                             <div className="col-sm-12">
                                                 <input name="project" className="form-control" value={this.state.project} onChange={this.changeProjectHandler} />

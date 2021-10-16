@@ -31,8 +31,12 @@ const App = (props) => {
                 })
 
             }
-        } catch (Error) {
-            console.log(Error.message);
+        } catch (error) {
+            if(error.message === 'Request failed with status code 404') alert('User does not exist');
+            else if(error.message === 'Request failed with status code 500') alert ('Password Mismatch')
+            else {
+                console.log(error.message)
+            }
             setIsLoading(false)
         }
     };

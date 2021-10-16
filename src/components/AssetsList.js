@@ -25,6 +25,14 @@ const columns = [
 
 const AssetTitle = "All Assets";
 const AssetsList = ({ assets, isLoading }) => {
+    
+    const user = JSON.parse(localStorage.getItem('user'));
+    const userType = user?.userType;
+    const userLocation = user?.result?.states 
+    const userAssets = assets.map((x) => x).filter((x) => x.location === userLocation) //! Very Important
+    const data = userType !== 'User' ? assets : userAssets
+
+
     return (
         <>
             <div className="col-lg-12">
@@ -36,7 +44,7 @@ const AssetsList = ({ assets, isLoading }) => {
             <div style={{ marginTop: "30px", padding: "10px" }} className={isLoading && 'assetListLoading'}>
                 {isLoading ? (<div class="spinner-border text-primary dashboard-spinner" role="status"></div>)
                     : (
-                        <MaterialTable title={AssetTitle} data={assets} columns={columns} />
+                        <MaterialTable title={AssetTitle}  data={data} columns={columns} />
                     )
                 }
             </div >

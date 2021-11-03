@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import AssetService from "../services/AssetService"
-import {CreateAssets} from "../services/AssetService"
+// import AssetService from "../services/AssetService"
+import { CreateAssets } from "../services/AssetService"
 // import Topbar from "../components/topbar/Topbar"
 
 class CreateAsset extends Component {
@@ -61,48 +61,48 @@ class CreateAsset extends Component {
         if (this.state.model) {
           // if (this.state.assignee) {
           //   if (this.state.assigneeEmail) {
-              // if (this.state.checkedAsset) {
-                if (this.state.location) {
-                  if (this.state.serialnumber) {
-                    if (this.state.manufacturer) {
-                      // if (this.state.type) {
-                        if (this.state.project) {
-                          if (this.state.assetStatus) {
-                              CreateAssets(asset).then((res) => {
-                              if(res === 'Request failed with status code 500') {
-                                alert('Network error')
-                                this.setState({ loading: false })
-                              }else {
-                                this.setState({ loading: false })
-                                this.props.history.push("/dashboard");
-                              }
-                              console.log({res});
-                            });
-                          } else {
-                            alert("Please enter an Asset Status!")
-                            this.setState({ loading: false })
-                          }
-                        } else {
-                          alert("Please enter a Project!")
-                          this.setState({ loading: false })
-                        }
-                      // }
-                    } else {
-                      alert("Please enter a Manufacturer!")
-                      this.setState({ loading: false })
-                    }
+          // if (this.state.checkedAsset) {
+          if (this.state.location) {
+            if (this.state.serialnumber) {
+              if (this.state.manufacturer) {
+                // if (this.state.type) {
+                if (this.state.project) {
+                  if (this.state.assetStatus) {
+                    CreateAssets(asset).then((res) => {
+                      if (res === 'Request failed with status code 500') {
+                        alert('Network error')
+                        this.setState({ loading: false })
+                      } else {
+                        this.setState({ loading: false })
+                        this.props.history.push("/dashboard");
+                      }
+                      console.log({ res });
+                    });
                   } else {
-                    alert("Please enter a Serial Number!")
+                    alert("Please enter an Asset Status!")
                     this.setState({ loading: false })
                   }
                 } else {
-                  alert("Please enter a Location!")
+                  alert("Please enter a Project!")
                   this.setState({ loading: false })
                 }
-              // } else {
-              //   alert("Please enter a Checked Asset!")
-              //   this.setState({ loading: false })
-              // }
+                // }
+              } else {
+                alert("Please enter a Manufacturer!")
+                this.setState({ loading: false })
+              }
+            } else {
+              alert("Please enter a Serial Number!")
+              this.setState({ loading: false })
+            }
+          } else {
+            alert("Please enter a Location!")
+            this.setState({ loading: false })
+          }
+          // } else {
+          //   alert("Please enter a Checked Asset!")
+          //   this.setState({ loading: false })
+          // }
           //   } else {
           //     alert("Please enter an Assignee Email!")
           //     this.setState({ loading: false })
@@ -159,10 +159,6 @@ class CreateAsset extends Component {
     this.setState({ manufacturer: event.target.value });
   };
 
-  // changeTypeHandler = (event) => {
-  //   this.setState({ type: event.target.value });
-  // };
-
   changeProjectHandler = (event) => {
     this.setState({ project: event.target.value });
   };
@@ -177,7 +173,7 @@ class CreateAsset extends Component {
   }
 
   render() {
-   // const userId = JSON.parse(localStorage.getItem('user')).id
+    // const userId = JSON.parse(localStorage.getItem('user')).id
 
     return (
       <React.Fragment>

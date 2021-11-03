@@ -16,7 +16,7 @@ import UpdateAsset from "./components/UpdateAsset";
 import ViewAsset from "./components/ViewAsset";
 import Topbar from "./components/topbar/Topbar";
 import UsersList from "./components/UsersList"
-import AssetsLIst from "./components/AssetsList";
+import AssetsList from "./components/AssetsList";
 import BarChart from './components/barChart/BarChart'
 import ULogin from "./components/ULogin"
 import UserProfile from './components/userProfile/UserProfile'
@@ -32,7 +32,7 @@ function App() {
       <Switch>
         <Route exact path="/" component={() => (<ULogin user={user} updateUser={updateUser} />)}></Route>
         <Route path="/all-users" component={UsersList}></Route>
-        <Route path="/all-assets" component={AssetsLIst}></Route>
+        <Route path="/all-assets" component={AssetsList}></Route>
         <Route path="/dashboard" component={Dashboard}></Route>
         <Route path="/users" component={UserList}></Route>
         <Route path="/create-user" component={CreateUser}></Route>

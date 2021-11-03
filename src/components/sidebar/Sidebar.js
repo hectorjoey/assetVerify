@@ -36,7 +36,7 @@ const Sidebar = ({ id }) => {
                         {
                             user !== 'User' &&
                             <Link to={"/users"} className="sidebarListItem">
-                                <People />
+                                <People className="sidebarIcon" />
                                 Users
                             </Link>
 
@@ -52,7 +52,7 @@ const Sidebar = ({ id }) => {
                                 <RecentActors className="sidebarIcon" />
                                 Profile
                             </Link>
-                            }
+                        }
                         <li className="sidebarListItem">
                             <Report className="sidebarIcon" />
                             Report

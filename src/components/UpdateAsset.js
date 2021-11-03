@@ -21,8 +21,6 @@ class UpdateAsset extends Component {
             assetStatus: "",
             checkedAsset: "",
             checkedDate: ""
-            // returnDate: "",
-            // checkedOutDate: ""
 
         };
 
@@ -49,7 +47,8 @@ class UpdateAsset extends Component {
                 assetTag: asset.assetTag,
                 model: asset.model,
                 location: asset.location,
-                assignee: asset.assignee,
+                // assignee: asset.assignee,
+                // assigneeEmail: asset.assigneeEmail,
                 serialnumber: asset.serialnumber,
                 manufacturer: asset.manufacturer,
                 type: asset.type,
@@ -70,8 +69,8 @@ class UpdateAsset extends Component {
             assetTag: this.state.assetTag,
             model: this.state.model,
             location: this.state.location,
-            assignee: this.state.assignee,
-            assigneeEmail: this.state.assigneeEmail,
+            // assignee: this.state.assignee,
+            // assigneeEmail: this.state.assigneeEmail,
             serialnumber: this.state.serialnumber,
             manufacturer: this.state.manufacturer,
             type: this.state.type,

@@ -49,7 +49,7 @@ class AssetList extends Component {
   cancel() {
     this.props.history.push("/dashboard");
   }
-  
+
 
   render() {
     const user = JSON.parse(localStorage.getItem('user'));
@@ -65,13 +65,13 @@ class AssetList extends Component {
             <div className="col-lg-12">
               <Link to={"/create-asset"} style={{ marginBottom: "10px", marginTop: "22px" }} className="btn btn-primary float-lg-end">
                 <Add />
-                Add New Asset
+                Add Asset
               </Link>
             </div>
 
           </div>
           <table className="table table-striped table-bordered">
-            <thead style={{ textAlign: "center" }}>
+            <thead style={{ textAlign: "center", fontSize: "10px" }}>
               <tr>
                 <th>Id</th>
                 <th>Date</th>
@@ -85,14 +85,14 @@ class AssetList extends Component {
                 <th>Project</th>
                 <th>Checked Asset</th>
                 <th>Checked Date</th>
-                <th colSpan="3">Action</th>
+                <th colSpan="3">Actions</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody style={{ fontSize: "13px" }}>
               {data?.map((asset) => (
                 <tr key={asset?.id}>
                   <td>{asset?.id}</td>
-                  <td>{asset?.date}</td>
+                  <td>{asset?.createDate}</td>
                   <td>{asset?.description}</td>
                   <td>{asset?.assetTag}</td>
                   <td>{asset.model}</td>

@@ -5,10 +5,9 @@ import { Link, } from 'react-router-dom';
 import '../App.css'
 import MaterialTable from 'material-table'
 
-
 const columns = [
-    { title: "ID", field: "id" },
-    // { title: "Date", field: 'date' },
+    { title: "Id", field: "id" },
+    { title: "Date", field: 'createDate' },
     { title: "Description", field: "description" },
     // { title: "Manufacturer", field: 'manufacturer' },
     // { title: "Model", field: 'model' },
@@ -19,16 +18,16 @@ const columns = [
     // { title: "Project", field: "project" },
     { title: "Checked Asset", field: 'checkedAsset' },
     { title: "Asset Status", field: 'assetStatus' },
-    { title: "Assignee", field: "assignee" },
+    // { title: "Assignee", field: "assignee" },
     // { title: "Assignee Email", field: "assigneeEmail" },
 ]
 
 const AssetTitle = "All Assets";
 const AssetsList = ({ assets, isLoading }) => {
-    
+
     const user = JSON.parse(localStorage.getItem('user'));
     const userType = user?.userType;
-    const userLocation = user?.result?.states 
+    const userLocation = user?.result?.states
     const userAssets = assets.map((x) => x).filter((x) => x.location === userLocation) //! Very Important
     const data = userType !== 'User' ? assets : userAssets
 
@@ -36,15 +35,15 @@ const AssetsList = ({ assets, isLoading }) => {
     return (
         <>
             <div className="col-lg-12">
-                <Link to={"/create-asset"} style={{ marginBottom: "10px", marginRight: "12px" }} className="btn btn-primary float-lg-end">
+                <Link to={"/create-asset"} style={{ marginBottom: "12px", marginRight: "12px" }} className="btn btn-primary float-lg-end">
                     <Add />
-                    Add New Asset
+                    Add Asset
                 </Link>
             </div>
-            <div style={{ marginTop: "30px", padding: "10px" }} className={isLoading && 'assetListLoading'}>
+            <div style={{ marginTop: "35px", padding: "10px" }} className={isLoading && 'assetListLoading'}>
                 {isLoading ? (<div class="spinner-border text-primary dashboard-spinner" role="status"></div>)
                     : (
-                        <MaterialTable title={AssetTitle}  data={data} columns={columns} />
+                        <MaterialTable title={AssetTitle} data={data} columns={columns} />
                     )
                 }
             </div >

@@ -17,7 +17,7 @@ const App = (props) => {
         const user = { email, password };
 
         try {
-            const { data } = await axios.post("https://asset-verify.herokuapp.com/api/v1/login",
+            const { data } = await axios.post("http://localhost:8080/api/v1/login",
                 user)
             if (data.status === 200) {
                 props.updateUser(data)

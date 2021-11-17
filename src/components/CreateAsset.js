@@ -231,7 +231,7 @@ class CreateAsset extends Component {
                         <input name="assetStatus" className="form-control" value={this.state.assetStatus} onChange={this.changeAssetStatusHandler} />
                       </div>
 
-                      <div className="col-12" style={{ marginTop: "15px" }}>
+                      {/* <div className="col-12" style={{ marginTop: "15px" }}>
                         <label className="visible">Checked Type</label>
 
                         <select className="form-select" onChange={this.handleSelectCheckedAsset}>
@@ -239,7 +239,7 @@ class CreateAsset extends Component {
                           <option checkedAsset="1">Checked In</option>
                           <option checkedAsset="2">Checked Out</option>
                         </select>
-                      </div>
+                      </div> */}
 
                       <div className="col-12" style={{ marginTop: "15px" }} >
                         <label className="visible">Location</label>

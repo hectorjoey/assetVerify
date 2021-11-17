@@ -1,68 +1,92 @@
 
-import React, { Component } from "react";
+import React, { useEffect, useState, useCallback} from "react";
 import AssetService from "../services/AssetService";
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { Visibility, Delete, Edit, Add } from '@material-ui/icons'
 import '../App.css'
 
-class AssetList extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      location: JSON.parse(localStorage.getItem('user'))?.state,
-      assets: [],
-    };
+const initialDate = { startdate: '', endDate: ''}
+const  AssetList = () => {
+  const history = useHistory();
+  const [assets, setAssets] = useState([])
+  const [filterassets, setFilterAssets] = useState([])
+  const [date, setDate] = useState(initialDate);
+  const user = JSON.parse(localStorage.getItem('user'));
+  const userType = user?.userType;
+  const userLocation = user?.result?.states
+  const userAssets = assets.map((x) => x).filter((x) => x.location === userLocation)
+  const data = userType !== 'User' ? assets : userAssets
 
-    this.createAsset = this.createAsset.bind(this);
-    this.editAsset = this.editAsset.bind(this);
-    this.deleteAsset = this.deleteAsset.bind(this);
-    this.viewAsset = this.viewAsset.bind(this);
-  }
 
-  componentDidMount() {
+
+
+  const searchData = () => {
     AssetService.getAssets().then((res) => {
-      this.setState({ assets: res.data });
+      setAssets(res.data.filter((dates) => dates.checkedDate.startsWith(date.startdate) || dates.checkedDate.endsWith(date.endDate)))
+    });
+  }
+  
+  useEffect(() => {
+    AssetService.getAssets().then((res) => {
+      setAssets(res.data);
     });
 
-  }
+  }, [])
 
-  deleteAsset(id) {
+  useEffect(() => {
+    if(date.startdate !== '' && date.endDate !== '') {
+    searchData()
+    console.log('render')
+    }
+  }, [date.endDate, date.startdate])
+
+  const deleteAsset = (id) => {
     AssetService.deleteAsset(id).then((res) => {
-      this.setState({
-        assets: this.state.assets.filter((asset) => asset.id !== id),
-      });
-    });
+      setAssets(assets.filter((asset) => asset.id !== id),
+      )})
   }
 
-  editAsset(id) {
-    this.props.history.push(`/update-asset/${id}`);
-  }
+  // const editAsset = (id) => {
+  //   this.props.history.push(`/update-asset/${id}`);
+  // }
 
-  viewAsset(id) {
-    this.props.history.push(`/view-asset/${id}`);
-  }
+  // const viewAsset = (id) => {
+  //   this.props.history.push(`/view-asset/${id}`);
+  // }
 
-  createAsset() {
-    this.props.history.push("/create-asset");
+  // const createAsset = () => {
+  //   this.props.history.push("/create-asset");
 
-  }
-  cancel() {
-    this.props.history.push("/dashboard");
+  // }
+  const cancel = () => {
+    history.push("/dashboard");
   }
   
 
-  render() {
-    const user = JSON.parse(localStorage.getItem('user'));
-    const userType = user?.userType;
-    const userLocation = user?.result?.states
-    const userAssets = this.state.assets.map((x) => x).filter((x) => x.location === userLocation)
-    const data = userType !== 'User' ? this.state.assets : userAssets
-
+  console.log(assets)
     return (
       <div className="asset-list">
         <div className="row">
           <div className="row">
             <div className="col-lg-12">
+              <form onSubmit={searchData}>
+                <div>
+                  <label for="start">Start date:</label>
+                  <input 
+                      type="date" id="start" 
+                      name="startDate"
+                      value={date.startdate}
+                      onChange={(e) => setDate({...date, startdate: e.target.value})} 
+                  />
+                  <input 
+                      type="date" id="end" 
+                      name="endDate"
+                      value={date.endDate}
+                      onChange={(e) => setDate({...date, endDate: e.target.value})} 
+                  />
+                  </div>
+              </form>
+              
               <Link to={"/create-asset"} style={{ marginBottom: "10px", marginTop: "22px" }} className="btn btn-primary float-lg-end">
                 <Add />
                 Add New Asset
@@ -104,17 +128,17 @@ class AssetList extends Component {
                   <td>{asset?.checkedAsset}</td>
                   <td>{asset?.checkedDate}</td>
                   <td className="text-center"><Link to={`/update-asset/${asset?.id}`} className="edit"><Edit /></Link></td>
-                  <td className="text-center"><i onClick={() => this.deleteAsset(asset?.id)} className="fa fa-trash" style={{ color: "red" }} ><Delete /> </i></td>
+                  <td className="text-center"><i onClick={() => deleteAsset(asset?.id)} className="fa fa-trash" style={{ color: "red" }} ><Delete /> </i></td>
                   <td className="text-center"><Link to={`/view-asset/${asset?.id}`} className="view" style={{ alignItem: "center", color: "green" }}> <Visibility /></Link> </td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
-        <button className="btn btn-danger" onClick={this.cancel.bind(this)} style={{ margin: "22px" }}>Cancel</button>
+        <button className="btn btn-danger" onClick={cancel} style={{ margin: "22px" }}>Cancel</button>
       </div>
     );
   }
-}
+
 
 export default AssetList;

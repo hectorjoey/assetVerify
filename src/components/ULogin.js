@@ -6,9 +6,9 @@ const App = (props) => {
     const [isloading, setIsLoading] = useState(false)
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const user = JSON.parse(localStorage.getItem('user'))?.status;
+    // const user = JSON.parse(localStorage.getItem('user'))?.status;
 
-    console.log('Userprofile ' + user)
+
     const history = useHistory();
 
     const handleSubmit = async e => {

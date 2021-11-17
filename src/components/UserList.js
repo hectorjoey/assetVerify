@@ -19,7 +19,6 @@ class UserList extends Component {
   }
 
   componentDidMount() {
-    console.log("properties: " + this.props);
     UserService.getUsers().then((res) => {
       this.setState({ users: res.data });
     });

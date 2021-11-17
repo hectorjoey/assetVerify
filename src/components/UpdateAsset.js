@@ -20,7 +20,8 @@ class UpdateAsset extends Component {
             project: "",
             assetStatus: "",
             checkedAsset: "",
-            checkedDate: ""
+            checkedDate: "",
+            Date: ""
             // returnDate: "",
             // checkedOutDate: ""
 
@@ -78,7 +79,7 @@ class UpdateAsset extends Component {
             project: this.state.project,
             assetStatus: this.state.assetStatus,
             checkedAsset: this.state.checkedAsset,
-            checkedDate: new Date().toLocaleString().slice(0, 10)
+            checkedDate: this.state.Date
 
         };
 
@@ -202,6 +203,15 @@ class UpdateAsset extends Component {
                                                     <option checkedAsset="1">Checked In</option>
                                                     <option checkedAsset="2">Checked Out</option>
                                                 </select>
+                                            </div>
+                                            <div>
+                                            <label for="start">Start date:</label>
+                                                <input 
+                                                    type="date" id="start" 
+                                                    name="startDate"
+                                                    value={this.state.Date}
+                                                    onChange={(e) => this.setState({Date: e.target.value})}
+                                                />
                                             </div>
                                         </div>
 

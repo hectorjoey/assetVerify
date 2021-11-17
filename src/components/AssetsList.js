@@ -36,6 +36,7 @@ const AssetsList = ({ assets, isLoading }) => {
     return (
         <>
             <div className="col-lg-12">
+                
                 <Link to={"/create-asset"} style={{ marginBottom: "10px", marginRight: "12px" }} className="btn btn-primary float-lg-end">
                     <Add />
                     Add New Asset
